@@ -1,0 +1,46 @@
+BONUS CHALLENGE FORM
+--------------------
+
+For each bonus challenge you have implemented, please replace the sentence "We are not entitled to this bonus."
+with a short description of:
+
+1. How it was implemented in your code
+2. Where it was used (in which class methods).
+3. How you tested that it is working correctly.
+
+--------------------
+
+1. Fully supporting all configuration fields and avoiding the use of magic numbers
+
+1. Every time we used a size of the game we took it from the config file. 
+2. used it in classes: Player, Dealer, Table. 
+3. we changed the numbers in config file and the game also changed due to that.
+
+--------------------
+
+2. Terminating all threads (that you created) gracefully and in reverse order to the order they were created in.
+
+1. When terminating a game we interrupted every player thread. We put the players in array (first player to 0 index etc) and interrupted each index (player) from the end of array and in each player we interupt his ai thread if its relevant. 
+2. Dealer and Player. 
+3. We have done prints to the screen when each thread terminated- we knew which one is terminated and when.
+
+--------------------
+
+3. Handling the config.turnTimeoutMillis value as follows:
+config.turnTimeoutMillis < 0: display nothing.
+config.turnTimeoutMillis = 0: display a timer since the last action (reshuffle or set collected).
+Note: in modes without a countdown timer the dealer must ensure there is always at least one legal set on the table.
+
+1. We added the appropriate conditions for this in the updateTimerDisplay function which means that the clock does not go down to a negative value but stops at 0. In addition to that, we implemented as a bonus the fact that when the clock shows below TurnTimeoutWarningSeconds it turns red and shows the milliseconds.
+2. We did this in the Dealer class in the updateTimerDisplay function.
+3. We played with the fields of the updateTimerDisplay and TurnTimeoutSeconds in the config file to make sure that what we did actually works.
+
+--------------------
+
+4. Making sure that the threads do not wake up unless some actual job needs to be done (e.g., a value needs to be
+changed on the display, key input needs to be handled, etc.) and the only threads created by you are:
+1 thread per player + 1 additional thread for non-human players.
+
+1. We created threads of every player (human or AI) only once and not in loop, also the dealer thread created just once. We put the players threads to wait() and called them only when they worked by the dealer thread, In addition we have the canAiWork boolean field that says the aiThread if it need to work or not.
+2. Dealer and Plyer. 
+3. We have done prints to the screen every time thread was created, or started running (when notified).
